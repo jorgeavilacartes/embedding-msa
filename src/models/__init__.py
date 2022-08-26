@@ -1,0 +1,2 @@
+from .cnnautoencoder import CNNAutoencoder
+from .denseautoencoder import DenseAutoencoder
