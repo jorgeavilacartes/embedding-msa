@@ -1,5 +1,5 @@
 import tensorflow as tf
-
+# TODO: to functional API
 class CNNAutoencoder(tf.keras.models.Model):
 
   def __init__(self,latent_dim,):
@@ -19,7 +19,7 @@ class CNNAutoencoder(tf.keras.models.Model):
       tf.keras.layers.Dense(8 * 8 * latent_dim , activation='relu'),
       tf.keras.layers.Reshape((8, 8, latent_dim)), # output (8,8,latent_dim)
       tf.keras.layers.Conv2DTranspose(filters=16, kernel_size=(2,2), strides=2, activation="relu"), # output (16,16,16)
-      tf.keras.layers.Conv2DTranspose(filters=8, kernel_size=(2,2), strides=2, activation="relu"),  # output (32,32,8)
+      tf.keras.layers.Conv2DTranspose(filters=32, kernel_size=(2,2), strides=2, activation="relu"),  # output (32,32,32)
       tf.keras.layers.Conv2DTranspose(filters=1, kernel_size=(2,2), strides=2, activation="relu")   # output (64,64,1) 
     ])
 

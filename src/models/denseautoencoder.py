@@ -1,5 +1,5 @@
 import tensorflow as tf
-
+# TODO: to functional API
 class DenseAutoencoder(tf.keras.models.Model):
 
   def __init__(self,latent_dim,):
