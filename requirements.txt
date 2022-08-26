@@ -1,2 +1,3 @@
 complexcgr
 tensorflow
+faiss-cpu
