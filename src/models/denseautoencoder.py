@@ -1,25 +1,17 @@
 import tensorflow as tf
 # TODO: to functional API
-class DenseAutoencoder(tf.keras.models.Model):
 
-  def __init__(self,latent_dim,):
-    super(DenseAutoencoder, self).__init__()
-    self.latent_dim = latent_dim   
-    
-    # encoder
-    self.encoder = tf.keras.Sequential([
-      tf.keras.layers.Flatten(),
-      tf.keras.layers.Dense(latent_dim, activation='relu'),
-    ])
+def DenseAutoencoder(latent_dim: int = 100):
 
-    # decoder
-    self.decoder = tf.keras.Sequential([
-      tf.keras.layers.Dense(4096, activation='sigmoid'),
-      tf.keras.layers.Reshape((64,64))
-    ])
+  # Encoder
+  input_enc = tf.keras.layers.Input(shape=(64,64,1))
+  x = tf.keras.layers.Flatten()(input_enc)
+  emb = tf.keras.layers.Dense(latent_dim, activation="relu")
 
-  def call(self, x):
+  # Decoder
+  x = tf.keras.layers.Dense(64 * 64, activation="relu")(emb)
+  out_dec = tf.keras.layers.Reshape((64,64,1))
 
-    encoded = self.encoder(x)
-    decoded = self.decoder(encoded)
-    return decoded
+  autoencoder = tf.keras.models.Model(inputs=input_enc, outputs=out_dec)
+
+  return autoencoder
