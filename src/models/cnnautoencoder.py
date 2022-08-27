@@ -1,30 +1,20 @@
 import tensorflow as tf
-# TODO: to functional API
-class CNNAutoencoder(tf.keras.models.Model):
 
-  def __init__(self,latent_dim,):
-    super(CNNAutoencoder, self).__init__()
-    self.latent_dim = latent_dim   
-    
-    # encoder
-    self.encoder = tf.keras.Sequential([
-      tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=2, padding="same", activation="relu"),
-      tf.keras.layers.Conv2D(filters=64, kernel_size=(3,3), strides=2, padding="same", activation="relu"),
-      tf.keras.layers.Flatten(),
-      tf.keras.layers.Dense(latent_dim, activation="relu")
-    ])
+def CNNAutoencoder(latent_dim: int = 100):
 
-    # decoder
-    self.decoder = tf.keras.Sequential([
-      tf.keras.layers.Dense(8 * 8 * latent_dim , activation='relu'),
-      tf.keras.layers.Reshape((8, 8, latent_dim)), # output (8,8,latent_dim)
-      tf.keras.layers.Conv2DTranspose(filters=16, kernel_size=(2,2), strides=2, activation="relu"), # output (16,16,16)
-      tf.keras.layers.Conv2DTranspose(filters=32, kernel_size=(2,2), strides=2, activation="relu"),  # output (32,32,32)
-      tf.keras.layers.Conv2DTranspose(filters=1, kernel_size=(2,2), strides=2, activation="relu")   # output (64,64,1) 
-    ])
+  # Encoder 
+  input_enc = tf.keras.layers.Input(shape=(64,64,1), name="input_encoder")
+  x = tf.keras.layers.Conv2D(filters=32, kernel_size=(3,3), strides=2, padding="same", activation="relu")(input_enc)
+  x = tf.keras.layers.Conv2D(filters=64, kernel_size=(3,3), strides=2, padding="same", activation="relu")(x)
+  x = tf.keras.layers.Flatten()(x)
+  emb = tf.keras.layers.Dense(latent_dim, activation="relu", name="output_encoder")(x)
 
-  def call(self, x):
+  # Decoder
+  x = tf.keras.layers.Dense(16 * 16 * 64 , activation="relu", name="input_decoder")(emb)
+  x = tf.keras.layers.Reshape((16, 16, 64))(x) # output (16,16,64)
+  x = tf.keras.layers.Conv2DTranspose(filters=32, kernel_size=(2,2), strides=2, activation="relu")(x)  # output (32,32,8)
+  out_dec = tf.keras.layers.Conv2DTranspose(filters=1, kernel_size=(2,2), strides=2, activation="relu", name="output_decoder")(x)   # output (64,64,1) 
 
-    encoded = self.encoder(x)
-    decoded = self.decoder(encoded)
-    return decoded
+  autoencoder = tf.keras.models.Model(inputs=input_enc, outputs=out_dec)
+
+  return autoencoder
