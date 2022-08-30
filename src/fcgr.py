@@ -9,7 +9,7 @@ class FCGRFromKmerCount(FCGR):
         super().__init__(k, bits)
 
     def __call__(self, kmer_count: Dict[str,int])-> np.ndarray:
-        "Given a DNA sequence, returns an array with his FCGR"
+        "Return FCGR from a dict of pairs kmer-frequency"
        
         # Create an empty array to save the FCGR values
         array_size = int(2**self.k)
