@@ -1,14 +1,14 @@
 k: 6
 
 fcgr_from_msa:
-  folder_msa: 'data/msas'
-  path_fcgr: 'data/fcgr'
+  folder_msa: data/msas
+  path_fcgr: data/fcgr
 
 train:
   latent_dim: 100
-  epochs: 30  
-  batch_size: 16
-  architecture: 'CNNAutoencoderBN'
+  epochs: 50
+  batch_size: 32
+  architecture: CNNAutoencoderCAE
   patiente_early_stopping: 20
   patiente_learning_rate: 15
   train_size: 0.8
