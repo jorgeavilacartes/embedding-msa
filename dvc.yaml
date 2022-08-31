@@ -1,0 +1,19 @@
+stages:
+  fcgr_from_msa:
+    cmd: python src/fcgr_from_msa.py
+    deps:
+    - data/msas
+    params:
+    - k
+    - fcgr_from_msa.folder_msa
+    - fcgr_from_msa.path_fcgr
+    outs:
+    - data/fcgr
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/fcgr
+    params:
+    - train.latent_dim
+    - train.epochs
+    - train.architecture

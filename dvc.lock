@@ -1,0 +1,48 @@
+schema: '2.0'
+stages:
+  fcgr-from-msa:
+    cmd: python src/fcgr_from_msa.py
+    deps:
+    - path: data/msas
+      md5: 1e94c02feab399e8c43aa7b58a57475f.dir
+      size: 1666331043
+      nfiles: 37425
+    params:
+      params.yaml:
+        fcgr_from_msa.folder_msa: ../data/msas
+        fcgr_from_msa.path_fcgr: ../data/fcgr
+        k: 6
+    outs:
+    - path: ../data/fcgr
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+  fcgr_from_msa:
+    cmd: python src/fcgr_from_msa.py
+    deps:
+    - path: data/msas
+      md5: 1e94c02feab399e8c43aa7b58a57475f.dir
+      size: 1666331043
+      nfiles: 37425
+    params:
+      params.yaml:
+        fcgr_from_msa.folder_msa: data/msas
+        fcgr_from_msa.path_fcgr: data/fcgr
+        k: 6
+    outs:
+    - path: data/fcgr
+      md5: dbaea4c27295a00836a29709229b0683.dir
+      size: 1231001216
+      nfiles: 37421
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/fcgr
+      md5: dbaea4c27295a00836a29709229b0683.dir
+      size: 1231001216
+      nfiles: 37421
+    params:
+      params.yaml:
+        train.architecture: CNNAutoencoderCAEBN
+        train.epochs: 10
+        train.latent_dim: 100
