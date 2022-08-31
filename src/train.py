@@ -57,10 +57,10 @@ ds_val = DataGenerator(
 
 # - Callbacks
 # checkpoint: save best weights
-Path('../data/train/checkpoints').mkdir(exist_ok=True, parents=True)
+Path('data/train/checkpoints').mkdir(exist_ok=True, parents=True)
 cb_checkpoint = tf.keras.callbacks.ModelCheckpoint(
     # filepath='../data/train/checkpoints/weights-{epoch:02d}-{val_loss:.3f}.hdf5',
-    filepath=f'../data/train/checkpoints/weights-{ARCHITECTURE}.hdf5',
+    filepath=f'data/train/checkpoints/weights-{ARCHITECTURE}.hdf5',
     monitor='val_loss',
     mode='min',
     save_best_only=True,
@@ -87,16 +87,16 @@ cb_earlystop = tf.keras.callbacks.EarlyStopping(
 )
 
 # save history of training
-Path('../data/train').mkdir(exist_ok=True, parents=True)
+Path('data/train').mkdir(exist_ok=True, parents=True)
 cb_csvlogger = tf.keras.callbacks.CSVLogger(
-    filename='../data/train/training_log.csv',
+    filename='data/train/training_log.csv',
     separator='\t',
     append=False
 )
 
 # save time by epoch
 cb_csvtime = CSVTimeHistory(
-    filename='../data/train/time_log.csv',
+    filename='data/train/time_log.csv',
     separator='\t',
     append=False
 )
