@@ -1,3 +1,4 @@
 complexcgr
 tensorflow
 faiss-cpu
+dvc[gdrive,ssh]
