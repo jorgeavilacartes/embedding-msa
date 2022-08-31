@@ -8,7 +8,7 @@ train:
   latent_dim: 100
   epochs: 30  
   batch_size: 16
-  architecture: 'CNNAutoencoder'
+  architecture: 'CNNAutoencoderBN'
   patiente_early_stopping: 20
   patiente_learning_rate: 15
   train_size: 0.8

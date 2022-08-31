@@ -2,6 +2,7 @@ stages:
   fcgr_from_msa:
     cmd: python src/fcgr_from_msa.py
     deps:
+    - src/fcgr_from_msa.py
     - data/msas
     params:
     - k
@@ -12,8 +13,23 @@ stages:
   train:
     cmd: python src/train.py
     deps:
+    - src/train.py
     - data/fcgr
     params:
     - train.latent_dim
     - train.epochs
+    - train.batch_size
     - train.architecture
+    - train.patiente_early_stopping
+    - train.patiente_learning_rate
+    - train.train_size
+    outs:
+    - data/train
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - src/evaluate.py
+    - data/train
+    metrics:
+    - data/eval/metrics.json:
+        cache: false

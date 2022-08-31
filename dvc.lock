@@ -7,6 +7,9 @@ stages:
       md5: 1e94c02feab399e8c43aa7b58a57475f.dir
       size: 1666331043
       nfiles: 37425
+    - path: src/fcgr_from_msa.py
+      md5: faf9de73d2e429dbb9e7f51b8e15775f
+      size: 1092
     params:
       params.yaml:
         fcgr_from_msa.folder_msa: data/msas
@@ -24,8 +27,34 @@ stages:
       md5: dbaea4c27295a00836a29709229b0683.dir
       size: 1231001216
       nfiles: 37421
+    - path: src/train.py
+      md5: 8032a0c460f77e84887607c0ee570730
+      size: 2845
     params:
       params.yaml:
-        train.architecture: CNNAutoencoder
+        train.architecture: CNNAutoencoderBN
+        train.batch_size: 16
         train.epochs: 30
         train.latent_dim: 100
+        train.patiente_early_stopping: 20
+        train.patiente_learning_rate: 15
+        train.train_size: 0.8
+    outs:
+    - path: data/train
+      md5: 279a7ab20ca240ce8050dd486cd1e8be.dir
+      size: 39949707
+      nfiles: 3
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/train
+      md5: 279a7ab20ca240ce8050dd486cd1e8be.dir
+      size: 39949707
+      nfiles: 3
+    - path: src/evaluate.py
+      md5: 63911bfe9115e7037955278350de070d
+      size: 1157
+    outs:
+    - path: data/eval/metrics.json
+      md5: 8b5aa749705d486d1aeca76023512380
+      size: 138
