@@ -32,7 +32,7 @@ stages:
       size: 2845
     params:
       params.yaml:
-        train.architecture: CNNAutoencoderCAE
+        train.architecture: CNNAutoencoderCAEBNLeakyRelu
         train.batch_size: 32
         train.epochs: 50
         train.latent_dim: 100
@@ -41,20 +41,20 @@ stages:
         train.train_size: 0.8
     outs:
     - path: data/train
-      md5: 54f2e47a9165a1c6e3347cbb87157f5b.dir
-      size: 272810386
+      md5: 7a36c24038b685278875c69131a5a8b2.dir
+      size: 272907912
       nfiles: 3
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: data/train
-      md5: 54f2e47a9165a1c6e3347cbb87157f5b.dir
-      size: 272810386
+      md5: 7a36c24038b685278875c69131a5a8b2.dir
+      size: 272907912
       nfiles: 3
     - path: src/evaluate.py
       md5: 63911bfe9115e7037955278350de070d
       size: 1157
     outs:
     - path: data/eval/metrics.json
-      md5: 083941207a9504f22b27e4dfc523d0ba
-      size: 137
+      md5: 0d3ad10ea7f7235b5758fd92364db787
+      size: 136
