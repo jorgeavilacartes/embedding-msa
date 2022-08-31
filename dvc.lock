@@ -26,6 +26,6 @@ stages:
       nfiles: 37421
     params:
       params.yaml:
-        train.architecture: CNNAutoencoder
+        train.architecture: CNNAutoencoderBN
         train.epochs: 30
         train.latent_dim: 100
